@@ -10,11 +10,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import application.purchase.PurchaseDto;
 
+import java.util.List;
+
 public interface PurchaseResource {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/purchase/{purchaseId}")
     PurchaseDto getById(@PathVariable(name = "purchaseId") String purchaseId);
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/purchase")
+    List<PurchaseDto> getAll();
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/purchase")

@@ -10,6 +10,8 @@ import application.purchase.PurchaseDto;
 
 import application.purchase.adapter.persistence.PurchaseRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -31,6 +33,14 @@ public class PurchaseController implements PurchaseResource {
         if (maybePurchase.isEmpty()) throw new PurchaseNotFound();
 
         return purchaseAssembler.createDto(maybePurchase.get());
+    }
+
+    @Override
+    public List<PurchaseDto> getAll() {
+        List<PurchaseDto> all = new ArrayList<>();
+
+        purchaseRepository.findAll().forEach(p -> all.add(purchaseAssembler.createDto(p)));
+        return all;
     }
 
     @Override
