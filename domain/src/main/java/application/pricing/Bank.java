@@ -1,4 +1,4 @@
-package pricing;
+package application.pricing;
 
 import java.math.BigDecimal;
 

@@ -1,12 +1,12 @@
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import pricing.Bank;
-import product.Amount;
-import purchase.DifferenceType;
-import purchase.Order;
-import purchase.Purchase;
-import purchase.PurchaseDifference;
+import application.pricing.Bank;
+import application.product.Amount;
+import application.purchase.DifferenceType;
+import application.purchase.Order;
+import application.purchase.Purchase;
+import application.purchase.PurchaseDifference;
 
 import java.math.BigDecimal;
 

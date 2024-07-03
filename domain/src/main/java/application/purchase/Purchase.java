@@ -1,4 +1,4 @@
-package purchase;
+package application.purchase;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

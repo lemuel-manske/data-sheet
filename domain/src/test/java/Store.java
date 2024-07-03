@@ -1,6 +1,6 @@
-import pricing.Bank;
-import pricing.Price;
-import product.Product;
+import application.pricing.Bank;
+import application.pricing.Price;
+import application.product.Product;
 
 class Store {
 

@@ -1,16 +1,16 @@
-package purchase;
+package application.purchase;
 
+import application.princing.PricingCurrencyDto;
+import application.product.AmountDto;
+import application.product.MeasurementUnitDto;
 import org.springframework.stereotype.Component;
 
-import pricing.Price;
-import princing.PriceDto;
-import princing.PricingCurrencyDto;
-import product.Amount;
-import product.AmountDto;
-import product.MeasurementUnit;
-import product.MeasurementUnitDto;
-import product.Product;
-import product.ProductDto;
+import application.pricing.Price;
+import application.princing.PriceDto;
+import application.product.Amount;
+import application.product.MeasurementUnit;
+import application.product.Product;
+import application.product.ProductDto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

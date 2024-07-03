@@ -1,4 +1,4 @@
-package purchase;
+package application.purchase;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

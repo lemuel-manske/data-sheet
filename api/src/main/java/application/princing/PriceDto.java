@@ -1,4 +1,4 @@
-package princing;
+package application.princing;
 
 public class PriceDto {
 

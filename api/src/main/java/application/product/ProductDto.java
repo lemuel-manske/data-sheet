@@ -1,6 +1,6 @@
-package product;
+package application.product;
 
-import princing.PriceDto;
+import application.princing.PriceDto;
 
 public class ProductDto {
 

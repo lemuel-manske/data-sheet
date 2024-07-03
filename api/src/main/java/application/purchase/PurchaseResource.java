@@ -1,4 +1,4 @@
-package purchase;
+package application.purchase;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

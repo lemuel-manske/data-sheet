@@ -1,4 +1,4 @@
-package product;
+package application.product;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

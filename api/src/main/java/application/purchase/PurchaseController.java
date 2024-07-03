@@ -1,11 +1,11 @@
-package purchase;
+package application.purchase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import purchase.adapter.persistence.PurchaseRepository;
+import application.purchase.adapter.persistence.PurchaseRepository;
 
 import java.util.Optional;
 

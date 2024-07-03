@@ -1,7 +1,7 @@
-package purchase;
+package application.purchase;
 
-import product.AmountDto;
-import product.ProductDto;
+import application.product.AmountDto;
+import application.product.ProductDto;
 
 public class OrderDto {
 

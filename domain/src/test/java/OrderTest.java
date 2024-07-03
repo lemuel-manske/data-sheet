@@ -1,8 +1,8 @@
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import product.Amount;
-import purchase.Order;
+import application.product.Amount;
+import application.purchase.Order;
 
 import java.math.BigDecimal;
 
