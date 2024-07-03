@@ -44,4 +44,10 @@ public class PurchaseController implements PurchaseResource {
         
         return purchaseAssembler.createDto(createdPurchase);
     }
+
+    @Override
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(String purchaseId) {
+        // PASS
+    }
 }
