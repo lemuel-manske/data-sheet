@@ -1,13 +1,12 @@
 package application.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+
 import application.api.PurchaseResource;
 import application.purchase.Purchase;
 import application.purchase.PurchaseAssembler;
 import application.purchase.PurchaseDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 
 import application.purchase.adapter.persistence.PurchaseRepository;
 
@@ -26,7 +25,6 @@ public class PurchaseController implements PurchaseResource {
     }
 
     @Override
-    @ResponseStatus(HttpStatus.OK)
     public PurchaseDto getById(String purchaseId) {
         Optional<Purchase> maybePurchase = purchaseRepository.findById(purchaseId);
 
@@ -36,7 +34,6 @@ public class PurchaseController implements PurchaseResource {
     }
 
     @Override
-    @ResponseStatus(HttpStatus.CREATED)
     public PurchaseDto create(PurchaseDto purchaseDto) {
         Purchase purchase = purchaseAssembler.createModel(purchaseDto);
 
@@ -46,8 +43,9 @@ public class PurchaseController implements PurchaseResource {
     }
 
     @Override
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(String purchaseId) {
-        // PASS
+        if (!purchaseRepository.existsById(purchaseId)) throw new PurchaseNotFound();
+
+        purchaseRepository.deleteById(purchaseId);
     }
 }
