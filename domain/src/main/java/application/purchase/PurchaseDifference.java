@@ -9,20 +9,20 @@ public class PurchaseDifference {
 
     private final List<Variation> listOfVariations = new ArrayList<>();
 
-    public void calcDifference(Order anOrder, Order anotherOrder) {
-        BigDecimal subtraction = subtractOrders(anOrder, anotherOrder);
+    public void calcDifference(ProductOrder anProductOrder, ProductOrder anotherProductOrder) {
+        BigDecimal subtraction = subtractOrders(anProductOrder, anotherProductOrder);
         DifferenceType type = calcDifferenceType(subtraction);
 
-        add(anOrder.getProduct().getName(), subtraction, type);
+        add(anProductOrder.getProduct().getName(), subtraction, type);
     }
 
     public void add(String productName, BigDecimal value, DifferenceType type) {
         listOfVariations.add(new Variation(productName, value, type));
     }
 
-    private BigDecimal subtractOrders(Order anOrder, Order anotherOrder) {
-        BigDecimal anOrderPrice = anOrder.getProduct().getPrice().getPrice();
-        BigDecimal subtrahendOrderPrice = anotherOrder.getProduct().getPrice().getPrice();
+    private BigDecimal subtractOrders(ProductOrder anProductOrder, ProductOrder anotherProductOrder) {
+        BigDecimal anOrderPrice = anProductOrder.getProduct().getPrice().getPrice();
+        BigDecimal subtrahendOrderPrice = anotherProductOrder.getProduct().getPrice().getPrice();
 
         return anOrderPrice.subtract(subtrahendOrderPrice).setScale(2, RoundingMode.HALF_UP);
     }

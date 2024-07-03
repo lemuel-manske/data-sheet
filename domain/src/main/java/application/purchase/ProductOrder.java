@@ -12,8 +12,8 @@ import application.product.Product;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-@Entity(name = "`ORDER`")
-public class Order {
+@Entity
+public class ProductOrder {
 
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -27,9 +27,9 @@ public class Order {
     @ManyToOne(cascade = CascadeType.ALL)
     private Amount amount;
 
-    public Order() { }
+    public ProductOrder() { }
 
-    public Order(Product product, Amount amount) {
+    public ProductOrder(Product product, Amount amount) {
         this.product = product;
         this.amount = amount;
     }

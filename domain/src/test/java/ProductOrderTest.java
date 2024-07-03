@@ -2,13 +2,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import application.product.Amount;
-import application.purchase.Order;
+import application.purchase.ProductOrder;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class OrderTest {
+class ProductOrderTest {
 
     private static Store store;
 
@@ -19,11 +19,11 @@ class OrderTest {
 
     @Test
     void calculateTotal() {
-        Order bananaOrder = new Order(store.banana(), Amount.kilogram(1.50f));
+        ProductOrder bananaProductOrder = new ProductOrder(store.banana(), Amount.kilogram(1.50f));
 
         BigDecimal expectedTotal = new BigDecimal("2.99");
 
-        BigDecimal actualTotal = bananaOrder.calcTotal();
+        BigDecimal actualTotal = bananaProductOrder.calcTotal();
 
         assertEquals(expectedTotal, actualTotal);
     }

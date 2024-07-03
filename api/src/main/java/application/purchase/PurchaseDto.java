@@ -6,7 +6,7 @@ import java.util.List;
 public class PurchaseDto {
 
     private String id;
-    private List<OrderDto> orders;
+    private List<ProductOrderDto> orders;
     private BigDecimal total;
 
     public String getId() {
@@ -17,11 +17,11 @@ public class PurchaseDto {
         this.id = id;
     }
 
-    public List<OrderDto> getOrders() {
+    public List<ProductOrderDto> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<OrderDto> orders) {
+    public void setOrders(List<ProductOrderDto> orders) {
         this.orders = orders;
     }
 

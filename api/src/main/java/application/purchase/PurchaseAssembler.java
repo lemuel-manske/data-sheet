@@ -1,16 +1,12 @@
 package application.purchase;
 
-import application.princing.PricingCurrencyDto;
-import application.product.AmountDto;
-import application.product.MeasurementUnitDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import application.pricing.Price;
-import application.princing.PriceDto;
 import application.product.Amount;
 import application.product.MeasurementUnit;
 import application.product.Product;
-import application.product.ProductDto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -20,39 +16,24 @@ import java.util.List;
 @Component
 public class PurchaseAssembler {
 
+    private final ProductOrderAssembler productOrderAssembler;
+
+    @Autowired
+    public PurchaseAssembler(ProductOrderAssembler productOrderAssembler) {
+        this.productOrderAssembler = productOrderAssembler;
+    }
+
     public PurchaseDto createDto(Purchase purchase) {
         PurchaseDto purchaseDto = new PurchaseDto();
 
-        List<OrderDto> orders = new ArrayList<>();
-
-        for (Order order : purchase.getOrders()) {
-            OrderDto dtoOrder = new OrderDto();
-
-            dtoOrder.setId(order.getId());
-            dtoOrder.setTotal(order.calcTotal());
-
-            AmountDto amountDto = new AmountDto();
-            amountDto.setId(order.getAmount().getId());
-            amountDto.setUnit(MeasurementUnitDto.valueOf(order.getAmount().getMeasurementUnit().toString()));
-            amountDto.setValue(order.getAmount().getAmount());
-            dtoOrder.setAmount(amountDto);
-
-            ProductDto productDto = new ProductDto();
-            productDto.setId(order.getProduct().getId());
-            productDto.setName(order.getProduct().getName());
-
-            PriceDto priceDto = new PriceDto();
-            priceDto.setId(order.getProduct().getPrice().getId());
-            priceDto.setValue(order.getProduct().getPrice().getPrice().floatValue());
-            priceDto.setCurrency(PricingCurrencyDto.valueOf(order.getProduct().getPrice().getCurrency().toString()));
-            productDto.setPrice(priceDto);
-            dtoOrder.setProduct(productDto);
-
-            orders.add(dtoOrder);
-        }
-
         purchaseDto.setId(purchase.getId());
         purchaseDto.setTotal(purchase.calcTotal());
+
+        List<ProductOrderDto> orders = new ArrayList<>();
+
+        for (ProductOrder productOrder : purchase.getOrders())
+            orders.add(productOrderAssembler.createDto(productOrder));
+
         purchaseDto.setOrders(orders);
 
         return purchaseDto;
@@ -61,19 +42,19 @@ public class PurchaseAssembler {
     public Purchase createModel(PurchaseDto purchaseDto) {
         Purchase purchase = new Purchase();
 
-        List<Order> orders = new ArrayList<>();
+        List<ProductOrder> productOrders = new ArrayList<>();
 
-        for (OrderDto dtoOrder : purchaseDto.getOrders()) {
-            Order order = new Order();
+        for (ProductOrderDto dtoOrder : purchaseDto.getOrders()) {
+            ProductOrder productOrder = new ProductOrder();
 
-            order.setPurchase(purchase);
-            order.setId(dtoOrder.getId());
+            productOrder.setPurchase(purchase);
+            productOrder.setId(dtoOrder.getId());
 
             Amount amount = new Amount();
             amount.setId(dtoOrder.getAmount().getId());
             amount.setMeasurementUnit(MeasurementUnit.valueOf(dtoOrder.getAmount().getUnit().toString()));
             amount.setAmount(dtoOrder.getAmount().getValue());
-            order.setAmount(amount);
+            productOrder.setAmount(amount);
 
             Product product = new Product();
             product.setId(dtoOrder.getProduct().getId());
@@ -84,13 +65,13 @@ public class PurchaseAssembler {
             price.setPrice(BigDecimal.valueOf(dtoOrder.getProduct().getPrice().getValue()));
             price.setCurrency(Currency.getInstance(dtoOrder.getProduct().getPrice().getCurrency().toString()));
             product.setPrice(price);
-            order.setProduct(product);
+            productOrder.setProduct(product);
 
-            orders.add(order);
+            productOrders.add(productOrder);
         }
 
         purchase.setId(purchase.getId());
-        purchase.setOrders(orders);
+        purchase.setOrders(productOrders);
 
         return purchase;
     }

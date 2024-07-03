@@ -5,7 +5,7 @@ import application.product.ProductDto;
 
 import java.math.BigDecimal;
 
-public class OrderDto {
+public class ProductOrderDto {
 
     private String id;
     private ProductDto product;

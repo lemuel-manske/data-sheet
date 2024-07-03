@@ -20,23 +20,23 @@ public class Purchase {
     private String id;
 
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> orders = new ArrayList<>();
+    private List<ProductOrder> productOrders = new ArrayList<>();
 
     public Purchase() { }
 
-    public Purchase(List<Order> orders) {
-        this.orders = orders;
+    public Purchase(List<ProductOrder> productOrders) {
+        this.productOrders = productOrders;
     }
 
-    public void add(Order... orders) {
-        this.orders.addAll(Arrays.asList(orders));
+    public void add(ProductOrder... productOrders) {
+        this.productOrders.addAll(Arrays.asList(productOrders));
     }
 
     public BigDecimal calcTotal() {
         BigDecimal total = BigDecimal.ZERO;
 
-        for (Order order : orders)
-            total = total.add(order.calcTotal());
+        for (ProductOrder productOrder : productOrders)
+            total = total.add(productOrder.calcTotal());
 
         return total.setScale(2, RoundingMode.HALF_UP);
     }
@@ -44,10 +44,10 @@ public class Purchase {
     public PurchaseDifference differenceFrom(Purchase otherPurchase) {
         PurchaseDifference diff = new PurchaseDifference();
 
-        for (Order otherOrder : otherPurchase.orders)
-            for (Order order : orders)
-                if (otherOrder.getProduct().getName().equals(order.getProduct().getName()))
-                    diff.calcDifference(order, otherOrder);
+        for (ProductOrder otherProductOrder : otherPurchase.productOrders)
+            for (ProductOrder productOrder : productOrders)
+                if (otherProductOrder.getProduct().getName().equals(productOrder.getProduct().getName()))
+                    diff.calcDifference(productOrder, otherProductOrder);
 
         return diff;
     }
@@ -60,11 +60,11 @@ public class Purchase {
         this.id = id;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setOrders(List<ProductOrder> productOrders) {
+        this.productOrders = productOrders;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public List<ProductOrder> getOrders() {
+        return productOrders;
     }
 }
