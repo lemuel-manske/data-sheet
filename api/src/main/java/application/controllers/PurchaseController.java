@@ -1,5 +1,9 @@
-package application.purchase;
+package application.controllers;
 
+import application.api.PurchaseResource;
+import application.purchase.Purchase;
+import application.purchase.PurchaseAssembler;
+import application.purchase.PurchaseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

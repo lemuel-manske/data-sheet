@@ -1,5 +1,6 @@
-package application.purchase;
+package application.api;
 
+import application.purchase.PurchaseDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
