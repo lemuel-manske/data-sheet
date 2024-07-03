@@ -29,6 +29,7 @@ public class PurchaseAssembler {
             OrderDto dtoOrder = new OrderDto();
 
             dtoOrder.setId(order.getId());
+            dtoOrder.setTotal(order.calcTotal());
 
             AmountDto amountDto = new AmountDto();
             amountDto.setId(order.getAmount().getId());
@@ -51,6 +52,7 @@ public class PurchaseAssembler {
         }
 
         purchaseDto.setId(purchase.getId());
+        purchaseDto.setTotal(purchase.calcTotal());
         purchaseDto.setOrders(orders);
 
         return purchaseDto;
