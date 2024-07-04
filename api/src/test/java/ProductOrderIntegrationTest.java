@@ -44,7 +44,17 @@ class ProductOrderIntegrationTest {
                 .createProductOrder(purchase.getId(), productOrderFactory.bananaOrder());
 
         PurchaseDto foundPurchaseResponse = purchaseOrderControllerDouble.getPurchaseById(purchase.getId());
-
         assertThat(foundPurchaseResponse.getOrders().get(0)).isEqualTo(createdProductOrder);
+    }
+
+    @Test
+    void givenPurchaseWithProductOrder_WhenProductOrderIsDeleted_ThenNoProductOrderLeftAtPurchase() throws Exception {
+        PurchaseDto purchase = purchaseOrderControllerDouble.createPurchase(purchaseFactory.bananaPurchase());
+
+        String bananaOrderId = purchase.getOrders().get(0).getId();
+        productOrderControllerDouble.deleteProductOrder(bananaOrderId);
+
+        PurchaseDto purchaseAfterDeletion = purchaseOrderControllerDouble.getPurchaseById(purchase.getId());
+        assertThat(purchaseAfterDeletion.getOrders()).isEmpty();
     }
 }

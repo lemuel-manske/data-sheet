@@ -2,6 +2,7 @@ package application.api;
 
 import application.purchase.ProductOrderDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,14 +18,17 @@ public interface ProductOrderResource {
     List<ProductOrderDto> getAllProductOrders(@PathVariable(name = "purchaseId") String purchaseId);
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/purchase/{purchaseId}/product-order/{productOrderId}")
-    ProductOrderDto getProductOrderById(@PathVariable(name = "purchaseId") String purchaseId,
-                                        @PathVariable(name = "productOrderId") String productOrderId);
+    @GetMapping("/purchase/product-order/{productOrderId}")
+    ProductOrderDto getProductOrderById(@PathVariable(name = "productOrderId") String productOrderId);
 
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/purchase/{purchaseId}/product-order")
     ProductOrderDto addProductOrder(@PathVariable(name = "purchaseId") String purchaseId,
                                     @RequestBody ProductOrderDto productOrderDto);
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/purchase/product-order/{productOrderId}")
+    void delete(@PathVariable(name = "productOrderId") String productOrderId);
 
 }

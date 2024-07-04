@@ -22,15 +22,14 @@ public class ProductOrderControllerDouble {
         this.mockMvc = mockMvc;
     }
 
-    public ResultActions getById(String purchaseId, String productOrderId) throws Exception {
-        MockHttpServletRequestBuilder getPurchaseRequest = get(
-                "/purchase/" + purchaseId + "/product-order/" + productOrderId);
+    public ResultActions getById(String productOrderId) throws Exception {
+        MockHttpServletRequestBuilder getPurchaseRequest = get("/purchase/product-order/" + productOrderId);
 
         return mockMvc.perform(getPurchaseRequest);
     }
 
-    public List<ProductOrderDto> getProductOrderById(String purchaseId, String productOrderId) throws Exception {
-        MockHttpServletResponse getPurchaseResponse = getById(purchaseId, productOrderId)
+    public List<ProductOrderDto> getProductOrderById(String productOrderId) throws Exception {
+        MockHttpServletResponse getPurchaseResponse = getById(productOrderId)
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
@@ -53,9 +52,8 @@ public class ProductOrderControllerDouble {
         return RequestHelper.readAs(ProductOrderDto.class, postResponse.getContentAsString());
     }
 
-    public ResultActions deleteProductOrder(String purchaseId, String productOrderId) throws Exception {
-        MockHttpServletRequestBuilder deleteRequest = delete(
-                "/purchase/" + purchaseId + "/product-order/" + productOrderId);
+    public ResultActions deleteProductOrder(String productOrderId) throws Exception {
+        MockHttpServletRequestBuilder deleteRequest = delete("/purchase/product-order/" + productOrderId);
 
         return mockMvc.perform(deleteRequest);
     }
