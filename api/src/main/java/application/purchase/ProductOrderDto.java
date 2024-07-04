@@ -1,6 +1,9 @@
 package application.purchase;
 
+import application.princing.PriceDto;
+import application.princing.PricingCurrencyDto;
 import application.product.AmountDto;
+import application.product.MeasurementUnitDto;
 import application.product.ProductDto;
 
 import java.math.BigDecimal;
@@ -51,5 +54,47 @@ public class ProductOrderDto {
                 && product.equals(that.product)
                 && amount.equals(that.amount)
                 && total.equals(that.total);
+    }
+
+    public static ProductOrderDtoBuilder builder() {
+        return new ProductOrderDtoBuilder();
+    }
+
+    public static final class ProductOrderDtoBuilder {
+
+        private final ProductOrderDto productOrderDto;
+
+        public ProductOrderDtoBuilder() {
+            productOrderDto = new ProductOrderDto();
+        }
+
+        public ProductOrderDtoBuilder product(String productName, BigDecimal productPrice, PricingCurrencyDto currency) {
+            PriceDto priceDto = new PriceDto();
+            priceDto.setCurrency(currency);
+            priceDto.setValue(productPrice);
+
+            ProductDto productDto = new ProductDto();
+            productDto.setName(productName);
+            productDto.setPrice(priceDto);
+
+            productOrderDto.setProduct(productDto);
+
+            return this;
+        }
+
+        public ProductOrderDtoBuilder amount(BigDecimal amount, MeasurementUnitDto measurementUnit) {
+            AmountDto amountDto = new AmountDto();
+            amountDto.setValue(amount);
+            amountDto.setUnit(measurementUnit);
+
+            productOrderDto.setAmount(amountDto);
+
+            return this;
+        }
+
+        public ProductOrderDto get() {
+            return productOrderDto;
+        }
+
     }
 }

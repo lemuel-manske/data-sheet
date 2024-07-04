@@ -1,8 +1,10 @@
+package utils;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-public final class IntegrationTestHelper {
+public final class RequestHelper {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
@@ -15,5 +17,4 @@ public final class IntegrationTestHelper {
 
         return ow.writeValueAsString(objectToRead);
     }
-
 }

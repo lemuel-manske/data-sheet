@@ -20,11 +20,13 @@ import org.springframework.test.web.servlet.ResultActions;
 import application.Application;
 import application.purchase.PurchaseDto;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import utils.PurchaseFactory;
+import utils.RequestHelper;
 
 @AutoConfigureMockMvc
 @TestPropertySource(locations = { "classpath:application-integrationtest.properties" })
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = { Application.class })
-class PurchaseResourceIntegrationTest {
+class PurchaseIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,13 +40,13 @@ class PurchaseResourceIntegrationTest {
 
     @Test
     void whenPurchaseIsCreated_ThenGetIt() throws Exception {
-        MockHttpServletResponse postResponse = doPostPurchase(factory.validBananaPurchase())
+        MockHttpServletResponse postResponse = doPostPurchase(factory.bananaPurchase())
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse();
 
         PurchaseDto actualCreatedPurchase =
-                IntegrationTestHelper.readAs(PurchaseDto.class, postResponse.getContentAsString());
+                RequestHelper.readAs(PurchaseDto.class, postResponse.getContentAsString());
 
         MockHttpServletResponse getResponse = doGetPurchase(actualCreatedPurchase.getId())
                 .andExpect(status().isOk())
@@ -52,19 +54,19 @@ class PurchaseResourceIntegrationTest {
                 .getResponse();
 
         PurchaseDto gotPurchase =
-                IntegrationTestHelper.readAs(PurchaseDto.class, getResponse.getContentAsString());
+                RequestHelper.readAs(PurchaseDto.class, getResponse.getContentAsString());
 
         assertThat(actualCreatedPurchase).isEqualTo(gotPurchase);
     }
 
     @Test
     void givenPurchase_WhenDeleted_ThenCannotGetIt() throws Exception {
-        MockHttpServletResponse postResponse = doPostPurchase(factory.validBananaPurchase())
+        MockHttpServletResponse postResponse = doPostPurchase(factory.bananaPurchase())
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse();
 
-        String actualCreatedPurchaseId = IntegrationTestHelper
+        String actualCreatedPurchaseId = RequestHelper
                 .readAs(PurchaseDto.class, postResponse.getContentAsString())
                 .getId();
 
@@ -90,7 +92,7 @@ class PurchaseResourceIntegrationTest {
     }
 
     private ResultActions doPostPurchase(PurchaseDto aPurchase) throws Exception {
-        String json = IntegrationTestHelper.writeAsString(aPurchase);
+        String json = RequestHelper.writeAsString(aPurchase);
 
         MockHttpServletRequestBuilder postRequest = post("/purchase")
                 .contentType(MediaType.APPLICATION_JSON)
