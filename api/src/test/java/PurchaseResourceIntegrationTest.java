@@ -75,6 +75,14 @@ class PurchaseResourceIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    void whenDeletedInvalidPurchase_ThenCannotDelete() throws Exception {
+        String invalidPurchaseId = "12321";
+
+        doDeletePurchase(invalidPurchaseId)
+                .andExpect(status().isNotFound());
+    }
+
     private ResultActions doGetPurchase(String purchaseId) throws Exception {
         MockHttpServletRequestBuilder getRequest = get("/purchase/" + purchaseId);
 
