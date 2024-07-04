@@ -1,7 +1,6 @@
 import application.Application;
 import application.purchase.ProductOrderDto;
 import application.purchase.PurchaseDto;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,6 @@ class ProductOrderIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private EntityManager entityManager;
 
     private ProductOrderFactory productOrderFactory;
     private PurchaseFactory purchaseFactory;
