@@ -1,7 +1,6 @@
 package application.controllers;
 
 import application.api.ProductOrderResource;
-import application.purchase.ProductOrderAssembler;
 import application.purchase.ProductOrderDto;
 import application.purchase.adapter.persistence.ProductOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;

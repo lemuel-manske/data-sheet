@@ -1,10 +1,12 @@
-package application.purchase;
+package application.controllers;
 
 import application.princing.PriceDto;
 import application.princing.PricingCurrencyDto;
 import application.product.AmountDto;
 import application.product.MeasurementUnitDto;
 import application.product.ProductDto;
+import application.purchase.ProductOrder;
+import application.purchase.ProductOrderDto;
 import org.springframework.stereotype.Component;
 
 @Component

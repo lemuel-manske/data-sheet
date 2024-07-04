@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import application.api.PurchaseResource;
 import application.purchase.Purchase;
-import application.purchase.PurchaseAssembler;
 import application.purchase.PurchaseDto;
 
 import application.purchase.adapter.persistence.PurchaseRepository;
