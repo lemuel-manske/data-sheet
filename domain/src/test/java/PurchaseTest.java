@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import application.pricing.Bank;
@@ -14,18 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PurchaseTest {
 
-    private static Store store;
-
-    @BeforeAll
-    static void createStore() {
-        store = new Store();
-    }
-
     @Test
     void calculateTotal() {
-        ProductOrder bananaProductOrder = new ProductOrder(store.banana(), Amount.kilogram(3));
-        ProductOrder riceProductOrder = new ProductOrder(store.rice(), Amount.kilogram(1));
-        ProductOrder beansProductOrder = new ProductOrder(store.beans(), Amount.kilogram(2));
+        ProductOrder bananaProductOrder = new ProductOrder(Store.banana(), Amount.kilogram(3));
+        ProductOrder riceProductOrder = new ProductOrder(Store.rice(), Amount.kilogram(1));
+        ProductOrder beansProductOrder = new ProductOrder(Store.beans(), Amount.kilogram(2));
 
         Purchase purchase = new Purchase();
         purchase.add(bananaProductOrder, riceProductOrder, beansProductOrder);
@@ -36,12 +28,12 @@ class PurchaseTest {
     @Test
     void findDifferenceBetweenPurchases() {
         Purchase purchase = new Purchase();
-        purchase.add(new ProductOrder(store.banana(), Amount.kilogram(3)));
-        purchase.add(new ProductOrder(store.apple(), Amount.kilogram(1)));
+        purchase.add(new ProductOrder(Store.banana(), Amount.kilogram(3)));
+        purchase.add(new ProductOrder(Store.apple(), Amount.kilogram(1)));
 
         Purchase otherPurchase = new Purchase();
-        otherPurchase.add(new ProductOrder(store.banana(Bank.brl("2.99")), Amount.kilogram(1)));
-        otherPurchase.add(new ProductOrder(store.apple(Bank.brl("5.99")), Amount.kilogram(2)));
+        otherPurchase.add(new ProductOrder(Store.banana(Bank.brl("2.99")), Amount.kilogram(1)));
+        otherPurchase.add(new ProductOrder(Store.apple(Bank.brl("5.99")), Amount.kilogram(2)));
 
         PurchaseDifference diff = new PurchaseDifference();
         diff.add("Banana", new BigDecimal("-1.00"), DifferenceType.DECREASE);
