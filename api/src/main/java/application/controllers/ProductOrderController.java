@@ -29,7 +29,7 @@ public class ProductOrderController implements ProductOrderResource {
     }
 
     @Override
-    public List<ProductOrderDto> getAllProductOrders(String purchaseId) {
+    public List<ProductOrderDto> getAll(String purchaseId) {
         List<ProductOrderDto> all = new ArrayList<>();
 
         productOrderRepository
@@ -40,7 +40,7 @@ public class ProductOrderController implements ProductOrderResource {
     }
 
     @Override
-    public ProductOrderDto getProductOrderById(String productOrderId) {
+    public ProductOrderDto getById(String productOrderId) {
         ProductOrder productOrder = productOrderRepository
                 .findById(productOrderId)
                 .orElseThrow(ProductOrderNotFound::new);
@@ -49,7 +49,7 @@ public class ProductOrderController implements ProductOrderResource {
     }
 
     @Override
-    public ProductOrderDto addProductOrder(String purchaseId, ProductOrderDto productOrderDto) {
+    public ProductOrderDto add(String purchaseId, ProductOrderDto productOrderDto) {
         ProductOrder productOrder = productOrderAssembler.createOrder(productOrderDto);
 
         Purchase purchase = purchaseRepository.findById(purchaseId)
