@@ -1,18 +1,17 @@
-import application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.TestPropertySource;
+
+import java.net.URI;
 
 import org.junit.jupiter.api.Test;
 
-import application.purchase.PurchaseDto;
-import org.springframework.test.context.TestPropertySource;
-
-import java.math.BigDecimal;
-import java.net.URI;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
+import application.Application;
+import application.purchase.PurchaseDto;
 
 @TestPropertySource(locations = { "classpath:application-integrationtest.properties" })
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = { Application.class })
