@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import application.purchase.ProductOrder;
 
 @Repository
-public interface ProductOrderRepository extends CrudRepository<ProductOrder, Long> {
+public interface ProductOrderRepository extends CrudRepository<ProductOrder, String> {
 
     @Query(value = "select po from ProductOrder po where po.purchase.id = ?1")
     Iterable<ProductOrder> findAllByPurchaseId(String purchaseId);

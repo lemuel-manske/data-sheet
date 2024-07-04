@@ -1,16 +1,15 @@
 package application.controllers;
 
+import application.pricing.Price;
+import application.product.Amount;
+import application.product.MeasurementUnit;
+import application.product.Product;
 import application.purchase.ProductOrder;
 import application.purchase.ProductOrderDto;
 import application.purchase.Purchase;
 import application.purchase.PurchaseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import application.pricing.Price;
-import application.product.Amount;
-import application.product.MeasurementUnit;
-import application.product.Product;
 
 import java.util.ArrayList;
 import java.util.Currency;
@@ -48,27 +47,9 @@ public class PurchaseAssembler {
         List<ProductOrder> productOrders = new ArrayList<>();
 
         for (ProductOrderDto dtoOrder : purchaseDto.getOrders()) {
-            ProductOrder productOrder = new ProductOrder();
+            ProductOrder productOrder = productOrderAssembler.createOrder(dtoOrder);
 
             productOrder.setPurchase(purchase);
-            productOrder.setId(dtoOrder.getId());
-
-            Amount amount = new Amount();
-            amount.setId(dtoOrder.getAmount().getId());
-            amount.setMeasurementUnit(MeasurementUnit.valueOf(dtoOrder.getAmount().getUnit().toString()));
-            amount.setAmount(dtoOrder.getAmount().getValue());
-            productOrder.setAmount(amount);
-
-            Product product = new Product();
-            product.setId(dtoOrder.getProduct().getId());
-            product.setName(dtoOrder.getProduct().getName());
-
-            Price price = new Price();
-            price.setId(dtoOrder.getProduct().getPrice().getId());
-            price.setPrice(dtoOrder.getProduct().getPrice().getValue());
-            price.setCurrency(Currency.getInstance(dtoOrder.getProduct().getPrice().getCurrency().toString()));
-            product.setPrice(price);
-            productOrder.setProduct(product);
 
             productOrders.add(productOrder);
         }

@@ -19,7 +19,7 @@ public class Price {
 
     public Price() { }
 
-    public Price(PricingCurrency currency, BigDecimal price) {
+    public Price(Currency currency, BigDecimal price) {
         this.currency = Currency.getInstance(currency.toString());
         this.price = price;
     }

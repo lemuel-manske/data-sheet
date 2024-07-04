@@ -1,13 +1,14 @@
 package application.princing;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Objects;
 
 public class PriceDto {
 
     private String id;
     private BigDecimal value;
-    private PricingCurrencyDto currency;
+    private Currency currency;
 
     public String getId() {
         return id;
@@ -25,28 +26,24 @@ public class PriceDto {
         this.value = value;
     }
 
-    public PricingCurrencyDto getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(PricingCurrencyDto currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         PriceDto priceDto = (PriceDto) o;
-        return id.equals(priceDto.id)
-                && value.equals(priceDto.value)
-                && currency.equals(priceDto.currency);
+        return Objects.equals(id, priceDto.id) && Objects.equals(value, priceDto.value) && Objects.equals(currency, priceDto.currency);
     }
 
     @Override
-    public String toString() {
-        return "PriceDto{" +
-                "id='" + id + '\'' +
-                ", value=" + value +
-                ", currency=" + currency +
-                '}';
+    public int hashCode() {
+        return Objects.hash(id, value, currency);
     }
 }

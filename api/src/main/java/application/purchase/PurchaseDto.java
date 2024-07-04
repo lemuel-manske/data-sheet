@@ -3,6 +3,7 @@ package application.purchase;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PurchaseDto {
 
@@ -40,9 +41,14 @@ public class PurchaseDto {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         PurchaseDto that = (PurchaseDto) o;
-        return id.equals(that.id)
-                && orders.equals(that.orders)
-                && total.equals(that.total);
+        return Objects.equals(id, that.id) && Objects.equals(orders, that.orders) && Objects.equals(total, that.total);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, orders, total);
     }
 }

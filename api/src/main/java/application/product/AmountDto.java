@@ -35,9 +35,14 @@ public class AmountDto {
 
     @Override
     public boolean equals(Object o) {
-        AmountDto that = (AmountDto) o;
-        return id.equals(that.id)
-                && unit.equals(that.unit)
-                && value.equals(that.value);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AmountDto amountDto = (AmountDto) o;
+        return Objects.equals(id, amountDto.id) && unit == amountDto.unit && Objects.equals(value, amountDto.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, unit, value);
     }
 }

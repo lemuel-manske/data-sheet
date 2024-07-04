@@ -1,12 +1,13 @@
 package application.purchase;
 
 import application.princing.PriceDto;
-import application.princing.PricingCurrencyDto;
 import application.product.AmountDto;
 import application.product.MeasurementUnitDto;
 import application.product.ProductDto;
 
 import java.math.BigDecimal;
+import java.util.Currency;
+import java.util.Objects;
 
 public class ProductOrderDto {
 
@@ -49,11 +50,15 @@ public class ProductOrderDto {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         ProductOrderDto that = (ProductOrderDto) o;
-        return id.equals(that.id)
-                && product.equals(that.product)
-                && amount.equals(that.amount)
-                && total.equals(that.total);
+        return Objects.equals(id, that.id) && Objects.equals(product, that.product) && Objects.equals(amount, that.amount) && Objects.equals(total, that.total);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, product, amount, total);
     }
 
     public static ProductOrderDtoBuilder builder() {
@@ -68,7 +73,7 @@ public class ProductOrderDto {
             productOrderDto = new ProductOrderDto();
         }
 
-        public ProductOrderDtoBuilder product(String productName, BigDecimal productPrice, PricingCurrencyDto currency) {
+        public ProductOrderDtoBuilder product(String productName, BigDecimal productPrice, Currency currency) {
             PriceDto priceDto = new PriceDto();
             priceDto.setCurrency(currency);
             priceDto.setValue(productPrice);

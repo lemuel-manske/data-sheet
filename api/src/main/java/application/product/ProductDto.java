@@ -36,9 +36,14 @@ public class ProductDto {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         ProductDto that = (ProductDto) o;
-        return id.equals(that.id)
-                && name.equals(that.name)
-                && price.equals(that.price);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(price, that.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price);
     }
 }
