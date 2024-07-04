@@ -43,4 +43,13 @@ public class ProductOrderDto {
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        ProductOrderDto that = (ProductOrderDto) o;
+        return id.equals(that.id)
+                && product.equals(that.product)
+                && amount.equals(that.amount)
+                && total.equals(that.total);
+    }
 }

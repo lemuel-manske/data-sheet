@@ -28,7 +28,7 @@ public class ProductOrderAssembler {
 
         PriceDto priceDto = new PriceDto();
         priceDto.setId(productOrder.getProduct().getPrice().getId());
-        priceDto.setValue(productOrder.getProduct().getPrice().getPrice().floatValue());
+        priceDto.setValue(productOrder.getProduct().getPrice().getPrice());
         priceDto.setCurrency(PricingCurrencyDto.valueOf(productOrder.getProduct().getPrice().getCurrency().toString()));
         productDto.setPrice(priceDto);
         productOrderDto.setProduct(productDto);

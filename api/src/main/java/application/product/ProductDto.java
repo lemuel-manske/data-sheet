@@ -2,6 +2,8 @@ package application.product;
 
 import application.princing.PriceDto;
 
+import java.util.Objects;
+
 public class ProductDto {
 
     private String id;
@@ -30,5 +32,13 @@ public class ProductDto {
 
     public void setPrice(PriceDto price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        ProductDto that = (ProductDto) o;
+        return id.equals(that.id)
+                && name.equals(that.name)
+                && price.equals(that.price);
     }
 }

@@ -1,6 +1,7 @@
 package application.product;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class AmountDto {
 
@@ -30,5 +31,13 @@ public class AmountDto {
 
     public void setValue(BigDecimal value) {
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        AmountDto that = (AmountDto) o;
+        return id.equals(that.id)
+                && unit.equals(that.unit)
+                && value.equals(that.value);
     }
 }

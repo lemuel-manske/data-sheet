@@ -62,7 +62,7 @@ public class PurchaseAssembler {
 
             Price price = new Price();
             price.setId(dtoOrder.getProduct().getPrice().getId());
-            price.setPrice(BigDecimal.valueOf(dtoOrder.getProduct().getPrice().getValue()));
+            price.setPrice(dtoOrder.getProduct().getPrice().getValue());
             price.setCurrency(Currency.getInstance(dtoOrder.getProduct().getPrice().getCurrency().toString()));
             product.setPrice(price);
             productOrder.setProduct(product);
