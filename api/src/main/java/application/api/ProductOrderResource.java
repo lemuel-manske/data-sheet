@@ -16,6 +16,12 @@ public interface ProductOrderResource {
     @GetMapping("/purchase/{purchaseId}/product-order")
     List<ProductOrderDto> getAllProductOrders(@PathVariable(name = "purchaseId") String purchaseId);
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/purchase/{purchaseId}/product-order/{productOrderId}")
+    ProductOrderDto getProductOrderById(@PathVariable(name = "purchaseId") String purchaseId,
+                                        @PathVariable(name = "productOrderId") String productOrderId);
+
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/purchase/{purchaseId}/product-order")
     ProductOrderDto addProductOrder(@PathVariable(name = "purchaseId") String purchaseId,

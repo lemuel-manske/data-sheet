@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProductOrderController implements ProductOrderResource {
@@ -37,6 +38,15 @@ public class ProductOrderController implements ProductOrderResource {
                 .forEach(o -> all.add(productOrderAssembler.createDto(o)));
 
         return all;
+    }
+
+    @Override
+    public ProductOrderDto getProductOrderById(String purchaseId, String productOrderId) {
+        ProductOrder productOrder = productOrderRepository
+                .findByPurchaseAndProductOrderId(purchaseId, productOrderId)
+                .orElseThrow(ProductOrderNotFound::new);
+
+        return productOrderAssembler.createDto(productOrder);
     }
 
     @Override
