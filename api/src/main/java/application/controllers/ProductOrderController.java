@@ -1,7 +1,6 @@
 package application.controllers;
 
 import application.api.ProductOrderResource;
-import application.api.PurchaseResource;
 import application.purchase.ProductOrder;
 import application.purchase.ProductOrderDto;
 import application.purchase.Purchase;

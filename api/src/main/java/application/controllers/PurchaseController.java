@@ -1,13 +1,11 @@
 package application.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
-
 import application.api.PurchaseResource;
 import application.purchase.Purchase;
 import application.purchase.PurchaseDto;
-
 import application.purchase.adapter.persistence.PurchaseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;

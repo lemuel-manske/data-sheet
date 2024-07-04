@@ -1,7 +1,6 @@
-import org.junit.jupiter.api.Test;
-
 import application.product.Amount;
 import application.purchase.ProductOrder;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 

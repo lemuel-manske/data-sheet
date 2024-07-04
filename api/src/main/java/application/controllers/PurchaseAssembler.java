@@ -1,9 +1,5 @@
 package application.controllers;
 
-import application.pricing.Price;
-import application.product.Amount;
-import application.product.MeasurementUnit;
-import application.product.Product;
 import application.purchase.ProductOrder;
 import application.purchase.ProductOrderDto;
 import application.purchase.Purchase;
@@ -12,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 
 @Component
