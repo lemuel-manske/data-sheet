@@ -9,6 +9,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,7 +38,7 @@ class PurchaseResourceIntegrationTest {
 
     @Test
     void whenPurchaseIsCreated_ThenGetIt() throws Exception {
-        MockHttpServletResponse postResponse = doPostValidPurchase(factory.validBananaPurchase())
+        MockHttpServletResponse postResponse = doPostPurchase(factory.validBananaPurchase())
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse();
@@ -56,13 +57,31 @@ class PurchaseResourceIntegrationTest {
         assertThat(actualCreatedPurchase).isEqualTo(gotPurchase);
     }
 
+    @Test
+    void givenPurchase_WhenDeleted_ThenCannotGetIt() throws Exception {
+        MockHttpServletResponse postResponse = doPostPurchase(factory.validBananaPurchase())
+                .andExpect(status().isCreated())
+                .andReturn()
+                .getResponse();
+
+        String actualCreatedPurchaseId = IntegrationTestHelper
+                .readAs(PurchaseDto.class, postResponse.getContentAsString())
+                .getId();
+
+        doDeletePurchase(actualCreatedPurchaseId)
+                .andExpect(status().isNoContent());
+
+        doGetPurchase(actualCreatedPurchaseId)
+                .andExpect(status().isNotFound());
+    }
+
     private ResultActions doGetPurchase(String purchaseId) throws Exception {
         MockHttpServletRequestBuilder getRequest = get("/purchase/" + purchaseId);
 
         return mockMvc.perform(getRequest);
     }
 
-    private ResultActions doPostValidPurchase(PurchaseDto aPurchase) throws Exception {
+    private ResultActions doPostPurchase(PurchaseDto aPurchase) throws Exception {
         String json = IntegrationTestHelper.writeAsString(aPurchase);
 
         MockHttpServletRequestBuilder postRequest = post("/purchase")
@@ -70,5 +89,11 @@ class PurchaseResourceIntegrationTest {
                 .content(json);
 
         return mockMvc.perform(postRequest);
+    }
+
+    private ResultActions doDeletePurchase(String purchaseId) throws Exception {
+        MockHttpServletRequestBuilder deleteRequest = delete("/purchase/" + purchaseId);
+
+        return mockMvc.perform(deleteRequest);
     }
 }
