@@ -34,11 +34,13 @@ class PurchaseTest {
         otherPurchase.add(new ProductOrder(Store.banana(Bank.brl("2.99")), Amount.kilogram(1)));
         otherPurchase.add(new ProductOrder(Store.apple(Bank.brl("5.99")), Amount.kilogram(2)));
 
-        Difference diff = new Difference();
-        diff.add("Banana", new BigDecimal("-1.00"), Difference.Type.DECREASE);
-        diff.add("Apple", new BigDecimal("2.00"), Difference.Type.INCREASE);
+        Difference expectedDiff = new Difference();
+            expectedDiff.add("Banana", new BigDecimal("-1.00"), Difference.Type.DECREASE);
+            expectedDiff.add("Apple", new BigDecimal("2.00"), Difference.Type.INCREASE);
 
-        assertEquals(diff, purchase.differenceFrom(otherPurchase));
+        Difference actualDifference = purchase.differenceFrom(otherPurchase, new DefaultMoneyRoundingPolicy());
+
+        assertEquals(expectedDiff, actualDifference);
     }
 
 }

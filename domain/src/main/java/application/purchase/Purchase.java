@@ -40,14 +40,14 @@ public class Purchase {
         return total.setScale(moneyRoundingPolicy.getScale(), moneyRoundingPolicy.getRoundingMode());
     }
 
-    public Difference differenceFrom(Purchase otherPurchase) {
+    public Difference differenceFrom(Purchase otherPurchase, MoneyRoundingPolicy policy) {
         Difference diff = new Difference();
 
         for (ProductOrder otherProductOrder : otherPurchase.productOrders)
             for (ProductOrder productOrder : productOrders)
                 if (otherProductOrder.getProduct().getName()
                         .equals(productOrder.getProduct().getName()))
-                    diff.calcDifference(productOrder, otherProductOrder);
+                    diff.calcDifference(productOrder, otherProductOrder, policy);
 
         return diff;
     }

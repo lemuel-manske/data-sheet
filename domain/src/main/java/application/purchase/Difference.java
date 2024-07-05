@@ -9,8 +9,11 @@ public class Difference {
 
     private final List<Variation> listOfVariations = new ArrayList<>();
 
-    public void calcDifference(ProductOrder anProductOrder, ProductOrder anotherProductOrder) {
-        BigDecimal subtraction = subtractOrders(anProductOrder, anotherProductOrder);
+    public void calcDifference(ProductOrder anProductOrder,
+                               ProductOrder anotherProductOrder,
+                               MoneyRoundingPolicy policy) {
+        BigDecimal subtraction = subtractOrders(anProductOrder, anotherProductOrder)
+                .setScale(policy.getScale(), policy.getRoundingMode());
         Type type = calcDifferenceType(subtraction);
 
         add(anProductOrder.getProduct().getName(), subtraction, type);
@@ -20,11 +23,12 @@ public class Difference {
         listOfVariations.add(new Variation(productName, value, type));
     }
 
-    private BigDecimal subtractOrders(ProductOrder anProductOrder, ProductOrder anotherProductOrder) {
+    private BigDecimal subtractOrders(ProductOrder anProductOrder,
+                                      ProductOrder anotherProductOrder) {
         BigDecimal anOrderPrice = anProductOrder.getProduct().getPrice().getPrice();
         BigDecimal subtrahendOrderPrice = anotherProductOrder.getProduct().getPrice().getPrice();
 
-        return anOrderPrice.subtract(subtrahendOrderPrice).setScale(2, RoundingMode.HALF_UP);
+        return anOrderPrice.subtract(subtrahendOrderPrice);
     }
 
     private Type calcDifferenceType(BigDecimal productPriceDifference) {
