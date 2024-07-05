@@ -1,4 +1,5 @@
 import application.Application;
+import application.purchase.ProductOrderDto;
 import application.purchase.PurchaseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,8 +8,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import utils.ProductOrderFactory;
 import utils.PurchaseControllerDouble;
 import utils.PurchaseFactory;
+
+import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,19 +25,21 @@ class PurchaseIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private ProductOrderFactory productOrderFactory;
+    private PurchaseFactory purchaseFactory;
     private PurchaseControllerDouble purchaseController;
-    private PurchaseFactory factory;
 
     @BeforeEach
     void setUp() {
+        productOrderFactory = new ProductOrderFactory();
+        purchaseFactory = new PurchaseFactory();
         purchaseController = new PurchaseControllerDouble(mockMvc);
-        factory = new PurchaseFactory();
     }
 
     @Test
     void whenPurchaseIsCreated_ThenGetIt() throws Exception {
         PurchaseDto actualCreatedPurchase =
-                purchaseController.createPurchase(factory.bananaPurchase());
+                purchaseController.createPurchase(purchaseFactory.bananaPurchase());
 
         PurchaseDto foundCreatedPurchase =
                 purchaseController.getPurchaseById(actualCreatedPurchase.getId());
@@ -44,15 +50,57 @@ class PurchaseIntegrationTest {
     @Test
     void givenPurchase_WhenDeleted_ThenCannotGetIt() throws Exception {
         PurchaseDto createdPurchase =
-                purchaseController.createPurchase(factory.bananaPurchase());
+                purchaseController.createPurchase(purchaseFactory.bananaPurchase());
 
         String createdPurchaseId = createdPurchase.getId();
 
         purchaseController.deletePurchase(createdPurchaseId)
                 .andExpect(status().isNoContent());
 
-        purchaseController.getById(createdPurchaseId)
+        purchaseController.tryToGetPurchaseById(createdPurchaseId)
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void givenEmptyPurchase_WhenProductOrderIsAdded_ThenUpdatePurchaseProductOrdersList() throws Exception {
+        PurchaseDto purchase = purchaseController.createPurchase(purchaseFactory.emptyPurchase());
+
+        ProductOrderDto createdProductOrder = purchaseController
+                .createProductOrder(purchase.getId(), productOrderFactory.bananaOrder());
+
+        PurchaseDto foundPurchaseResponse = purchaseController.getPurchaseById(purchase.getId());
+        assertThat(foundPurchaseResponse.getOrders().get(0)).isEqualTo(createdProductOrder);
+    }
+
+    @Test
+    void givenPurchaseWithProductOrder_WhenProductOrderIsDeleted_ThenNoProductOrderLeftAtPurchase() throws Exception {
+        PurchaseDto purchase = purchaseController.createPurchase(purchaseFactory.bananaPurchase());
+
+        String bananaOrderId = purchase.getOrders().get(0).getId();
+
+        purchaseController.deleteProductOrder(bananaOrderId)
+                .andExpect(status().isNoContent());
+
+        PurchaseDto purchaseAfterDeletion = purchaseController.getPurchaseById(purchase.getId());
+        assertThat(purchaseAfterDeletion.getOrders()).isEmpty();
+    }
+
+    @Test
+    void whenProductOrderIsUpdated_ThenMergeIt() throws Exception {
+        PurchaseDto purchase = purchaseController.createPurchase(purchaseFactory.bananaPurchase());
+
+        ProductOrderDto bananaOrder = purchase.getOrders().get(0);
+
+        bananaOrder.getProduct().getPrice().setValue(new BigDecimal("1.99"));
+        bananaOrder.getAmount().setValue(new BigDecimal("2.00"));
+
+        ProductOrderDto bananaOrderAfterUpdate = purchaseController
+                .updateProductOrder(bananaOrder.getId(), bananaOrder);
+
+        BigDecimal newTotalAfterUpdate = new BigDecimal("3.98");
+        bananaOrder.setTotal(newTotalAfterUpdate);
+
+        assertThat(bananaOrder).isEqualTo(bananaOrderAfterUpdate);
     }
 
 }
