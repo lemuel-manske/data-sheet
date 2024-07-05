@@ -24,7 +24,8 @@ public class PurchaseController implements PurchaseResource {
     @Autowired
     PurchaseController(PurchaseRepository purchaseRepository,
                        PurchaseAssembler purchaseAssembler,
-                       ProductOrderRepository productOrderRepository, ProductOrderAssembler productOrderAssembler) {
+                       ProductOrderRepository productOrderRepository,
+                       ProductOrderAssembler productOrderAssembler) {
         this.purchaseRepository = purchaseRepository;
         this.purchaseAssembler = purchaseAssembler;
         this.productOrderRepository = productOrderRepository;
