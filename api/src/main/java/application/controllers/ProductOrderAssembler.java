@@ -11,7 +11,6 @@ import application.product.ProductDto;
 import application.purchase.CalculatePurchaseTotalService;
 import application.purchase.ProductOrder;
 import application.purchase.ProductOrderDto;
-import application.purchase.Purchase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,24 +30,27 @@ public class ProductOrderAssembler {
         ProductOrderDto productOrderDto = new ProductOrderDto();
 
         productOrderDto.setId(productOrder.getId());
+
         productOrderDto.setTotal(calculatePurchaseTotalService.execute(productOrder.getPurchase()));
 
-        AmountDto amountDto = new AmountDto();
-        amountDto.setId(productOrder.getAmount().getId());
-        amountDto.setUnit(MeasurementUnitDto.valueOf(productOrder.getAmount().getMeasurementUnit().toString()));
-        amountDto.setValue(productOrder.getAmount().getAmount());
-        productOrderDto.setAmount(amountDto);
+            PriceDto priceDto = new PriceDto();
+            priceDto.setId(productOrder.getProduct().getPrice().getId());
+            priceDto.setValue(productOrder.getProduct().getPrice().getPrice());
+            priceDto.setCurrency(Currency.getInstance(productOrder.getProduct().getPrice().getCurrency().toString()));
 
-        ProductDto productDto = new ProductDto();
-        productDto.setId(productOrder.getProduct().getId());
-        productDto.setName(productOrder.getProduct().getName());
+            ProductDto productDto = new ProductDto();
+            productDto.setId(productOrder.getProduct().getId());
+            productDto.setName(productOrder.getProduct().getName());
+            productDto.setPrice(priceDto);
 
-        PriceDto priceDto = new PriceDto();
-        priceDto.setId(productOrder.getProduct().getPrice().getId());
-        priceDto.setValue(productOrder.getProduct().getPrice().getPrice());
-        priceDto.setCurrency(Currency.getInstance(productOrder.getProduct().getPrice().getCurrency().toString()));
-        productDto.setPrice(priceDto);
         productOrderDto.setProduct(productDto);
+
+            AmountDto amountDto = new AmountDto();
+            amountDto.setId(productOrder.getAmount().getId());
+            amountDto.setUnit(MeasurementUnitDto.valueOf(productOrder.getAmount().getMeasurementUnit().toString()));
+            amountDto.setValue(productOrder.getAmount().getAmount());
+
+        productOrderDto.setAmount(amountDto);
 
         return productOrderDto;
     }
@@ -58,23 +60,24 @@ public class ProductOrderAssembler {
 
         productOrder.setId(productOrderDto.getId());
 
-        Amount amount = new Amount();
-        amount.setId(productOrderDto.getAmount().getId());
-        amount.setMeasurementUnit(MeasurementUnit.valueOf(productOrderDto.getAmount().getUnit().toString()));
-        amount.setAmount(productOrderDto.getAmount().getValue());
-        productOrder.setAmount(amount);
+            Price price = new Price();
+            price.setId(productOrderDto.getProduct().getPrice().getId());
+            price.setPrice(productOrderDto.getProduct().getPrice().getValue());
+            price.setCurrency(Currency.getInstance(productOrderDto.getProduct().getPrice().getCurrency().toString()));
 
-        Price price = new Price();
-        price.setId(productOrderDto.getProduct().getPrice().getId());
-        price.setPrice(productOrderDto.getProduct().getPrice().getValue());
-        price.setCurrency(Currency.getInstance(productOrderDto.getProduct().getPrice().getCurrency().toString()));
+            Product product = new Product();
+            product.setId(productOrderDto.getProduct().getId());
+            product.setName(productOrderDto.getProduct().getName());
+            product.setPrice(price);
 
-        Product product = new Product();
-        product.setId(productOrderDto.getProduct().getId());
-        product.setName(productOrderDto.getProduct().getName());
-
-        product.setPrice(price);
         productOrder.setProduct(product);
+
+            Amount amount = new Amount();
+            amount.setId(productOrderDto.getAmount().getId());
+            amount.setMeasurementUnit(MeasurementUnit.valueOf(productOrderDto.getAmount().getUnit().toString()));
+            amount.setAmount(productOrderDto.getAmount().getValue());
+
+        productOrder.setAmount(amount);
 
         return productOrder;
     }
