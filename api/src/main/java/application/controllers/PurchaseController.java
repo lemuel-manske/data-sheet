@@ -104,20 +104,4 @@ public class PurchaseController implements PurchaseResource {
 
         productOrderRepository.deleteById(productOrderId);
     }
-
-    @Override
-    public ProductOrderDto updateProductOrder(String productOrderId, ProductOrderDto productOrderDto) {
-        ProductOrder productOrderToUpdate = productOrderAssembler.createModel(productOrderDto);
-
-        ProductOrder productOrder = productOrderRepository
-                .findById(productOrderId)
-                .orElseThrow(ProductOrderNotFound::new);
-
-        productOrder.setAmount(productOrderToUpdate.getAmount());
-        productOrder.setProduct(productOrderToUpdate.getProduct());
-
-        productOrderRepository.save(productOrder);
-
-        return productOrderAssembler.createDto(productOrder);
-    }
 }

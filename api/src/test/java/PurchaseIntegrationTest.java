@@ -84,23 +84,4 @@ class PurchaseIntegrationTest {
         PurchaseDto purchaseAfterDeletion = purchaseController.getPurchaseById(purchase.getId());
         assertThat(purchaseAfterDeletion.getOrders()).isEmpty();
     }
-
-    @Test
-    void whenProductOrderIsUpdated_ThenMergeIt() throws Exception {
-        PurchaseDto purchase = purchaseController.createPurchase(purchaseFactory.bananaPurchase());
-
-        ProductOrderDto bananaOrder = purchase.getOrders().get(0);
-
-        bananaOrder.getProduct().getPrice().setValue(new BigDecimal("1.99"));
-        bananaOrder.getAmount().setValue(new BigDecimal("2.00"));
-
-        ProductOrderDto bananaOrderAfterUpdate = purchaseController
-                .updateProductOrder(bananaOrder.getId(), bananaOrder);
-
-        BigDecimal newTotalAfterUpdate = new BigDecimal("3.98");
-        bananaOrder.setTotal(newTotalAfterUpdate);
-
-        assertThat(bananaOrder).isEqualTo(bananaOrderAfterUpdate);
-    }
-
 }
