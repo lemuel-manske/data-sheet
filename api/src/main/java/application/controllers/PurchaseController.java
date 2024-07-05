@@ -2,8 +2,10 @@ package application.controllers;
 
 import application.api.PurchaseResource;
 import application.purchase.ProductOrder;
+import application.purchase.ProductOrderAssembler;
 import application.purchase.ProductOrderDto;
 import application.purchase.Purchase;
+import application.purchase.PurchaseAssembler;
 import application.purchase.PurchaseDto;
 import application.purchase.adapter.persistence.ProductOrderRepository;
 import application.purchase.adapter.persistence.PurchaseRepository;

@@ -1,10 +1,5 @@
-package application.controllers;
+package application.purchase;
 
-import application.purchase.CalculatePurchaseTotalService;
-import application.purchase.ProductOrder;
-import application.purchase.ProductOrderDto;
-import application.purchase.Purchase;
-import application.purchase.PurchaseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

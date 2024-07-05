@@ -1,4 +1,4 @@
-package application.controllers;
+package application.purchase;
 
 import application.pricing.Price;
 import application.pricing.PriceDto;
@@ -8,9 +8,6 @@ import application.product.MeasurementUnit;
 import application.product.MeasurementUnitDto;
 import application.product.Product;
 import application.product.ProductDto;
-import application.purchase.CalculatePurchaseTotalService;
-import application.purchase.ProductOrder;
-import application.purchase.ProductOrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -55,7 +52,7 @@ public class ProductOrderAssembler {
         return productOrderDto;
     }
 
-    ProductOrder createModel(ProductOrderDto productOrderDto) {
+    public ProductOrder createModel(ProductOrderDto productOrderDto) {
         ProductOrder productOrder = new ProductOrder();
 
         productOrder.setId(productOrderDto.getId());
