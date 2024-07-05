@@ -8,8 +8,4 @@ public class Bank {
     public static Price brl(String price) {
         return new Price(Currency.getInstance("BRL"), new BigDecimal(price));
     }
-
-    public static Price brl(BigDecimal price) {
-        return new Price(Currency.getInstance("BRL"), price);
-    }
 }
