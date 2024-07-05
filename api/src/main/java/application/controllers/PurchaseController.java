@@ -8,12 +8,10 @@ import application.purchase.PurchaseDto;
 import application.purchase.adapter.persistence.ProductOrderRepository;
 import application.purchase.adapter.persistence.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class PurchaseController implements PurchaseResource {
