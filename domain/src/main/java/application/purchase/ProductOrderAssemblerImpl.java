@@ -54,10 +54,12 @@ public class ProductOrderAssemblerImpl implements ProductOrderAssembler {
     }
 
     @Override
-    public ProductOrder createModel(ProductOrderDto productOrderDto) {
+    public ProductOrder createModel(Purchase purchase, ProductOrderDto productOrderDto) {
         ProductOrder productOrder = new ProductOrder();
 
         productOrder.setId(productOrderDto.getId());
+
+        productOrder.setPurchase(purchase);
 
             Price price = new Price();
             price.setId(productOrderDto.getProduct().getPrice().getId());

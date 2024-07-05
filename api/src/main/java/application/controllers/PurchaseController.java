@@ -88,13 +88,11 @@ public class PurchaseController implements PurchaseResource {
 
     @Override
     public ProductOrderDto addProductOrderToPurchase(String purchaseId, ProductOrderDto productOrderDto) {
-        ProductOrder productOrder = productOrderAssembler.createModel(productOrderDto);
-
         Purchase purchase = purchaseRepository
                 .findById(purchaseId)
                 .orElseThrow(PurchaseNotFound::new);
 
-        productOrder.setPurchase(purchase);
+        ProductOrder productOrder = productOrderAssembler.createModel(purchase, productOrderDto);
 
         ProductOrder createdProductOrder = productOrderRepository.save(productOrder);
 

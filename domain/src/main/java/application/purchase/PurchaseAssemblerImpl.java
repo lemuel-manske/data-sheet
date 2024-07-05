@@ -33,11 +33,8 @@ public class PurchaseAssemblerImpl implements PurchaseAssembler {
         Purchase purchase = new Purchase();
         purchase.setId(purchase.getId());
 
-        for (ProductOrderDto dtoOrder : purchaseDto.getOrders()) {
-            ProductOrder productOrder = productOrderAssembler.createModel(dtoOrder);
-            productOrder.setPurchase(purchase);
-            purchase.add(productOrder);
-        }
+        for (ProductOrderDto dtoOrder : purchaseDto.getOrders())
+            purchase.add(productOrderAssembler.createModel(purchase, dtoOrder));
 
         return purchase;
     }

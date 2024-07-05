@@ -4,6 +4,6 @@ public interface ProductOrderAssembler {
 
     ProductOrderDto createDto(ProductOrder purchase);
 
-    ProductOrder createModel(ProductOrderDto purchase);
+    ProductOrder createModel(Purchase purchase, ProductOrderDto productOrderDto);
 }
 
