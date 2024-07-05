@@ -1,5 +1,6 @@
 import application.pricing.Bank;
 import application.product.Amount;
+import application.purchase.DefaultScaleStrategy;
 import application.purchase.DifferenceType;
 import application.purchase.ProductOrder;
 import application.purchase.Purchase;
@@ -21,7 +22,7 @@ class PurchaseTest {
         Purchase purchase = new Purchase();
         purchase.add(bananaProductOrder, riceProductOrder, beansProductOrder);
 
-        assertEquals(new BigDecimal("28.94"), purchase.calcTotal());
+        assertEquals(new BigDecimal("28.94"), purchase.calcTotal(new DefaultScaleStrategy()));
     }
 
     @Test

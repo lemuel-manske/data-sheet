@@ -32,13 +32,13 @@ public class Purchase {
         this.productOrders.addAll(Arrays.asList(productOrders));
     }
 
-    public BigDecimal calcTotal() {
+    public BigDecimal calcTotal(ScaleStrategy scaleStrategy) {
         BigDecimal total = BigDecimal.ZERO;
 
         for (ProductOrder productOrder : productOrders)
-            total = total.add(productOrder.calcTotal());
+            total = total.add(productOrder.calcTotal(scaleStrategy));
 
-        return total.setScale(2, RoundingMode.HALF_UP);
+        return total.setScale(scaleStrategy.getScale(), scaleStrategy.getRoundingMode());
     }
 
     public PurchaseDifference differenceFrom(Purchase otherPurchase) {

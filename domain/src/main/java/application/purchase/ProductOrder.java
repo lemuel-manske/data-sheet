@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -34,10 +35,10 @@ public class ProductOrder {
         this.amount = amount;
     }
 
-    public BigDecimal calcTotal() {
+    public BigDecimal calcTotal(ScaleStrategy scaleStrategy) {
         BigDecimal priceTimesAmount = product.getPrice().getPrice().multiply(amount.getAmount());
 
-        return priceTimesAmount.setScale(2, RoundingMode.HALF_UP);
+        return priceTimesAmount.setScale(scaleStrategy.getScale(), scaleStrategy.getRoundingMode());
     }
 
     public String getId() {
