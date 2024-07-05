@@ -5,6 +5,8 @@ import java.util.Currency;
 
 public class Bank {
 
+    private Bank() {}
+
     public static Price brl(String price) {
         return new Price(Currency.getInstance("BRL"), new BigDecimal(price));
     }
