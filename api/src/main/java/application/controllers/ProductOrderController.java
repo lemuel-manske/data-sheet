@@ -32,9 +32,11 @@ public class ProductOrderController implements ProductOrderResource {
     public List<ProductOrderDto> getAll(String purchaseId) {
         List<ProductOrderDto> all = new ArrayList<>();
 
+        if (!purchaseRepository.existsById(purchaseId)) throw new PurchaseNotFound();
+
         productOrderRepository
                 .findAllByPurchaseId(purchaseId)
-                .forEach(o -> all.add(productOrderAssembler.createDto(o)));
+                .forEach(po -> all.add(productOrderAssembler.createDto(po)));
 
         return all;
     }

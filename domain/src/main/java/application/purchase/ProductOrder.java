@@ -18,8 +18,7 @@ public class ProductOrder {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @ManyToOne
-    @Column(nullable = false)
+    @ManyToOne(optional = false)
     private Purchase purchase;
 
     @ManyToOne(cascade = CascadeType.ALL)

@@ -11,8 +11,8 @@ public class PurchaseDto {
     private List<ProductOrderDto> orders = new ArrayList<>();
     private BigDecimal total;
 
-    public void addOrders(ProductOrderDto productOrderDto) {
-        orders.add(productOrderDto);
+    public void add(ProductOrderDto... orderDtos) {
+        orders.addAll(List.of(orderDtos));
     }
 
     public String getId() {

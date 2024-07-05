@@ -8,9 +8,11 @@ import application.product.MeasurementUnit;
 import application.product.MeasurementUnitDto;
 import application.product.Product;
 import application.product.ProductDto;
+import application.purchase.CalculatePurchaseTotalService;
 import application.purchase.ProductOrder;
 import application.purchase.ProductOrderDto;
 import application.purchase.Purchase;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Currency;
@@ -18,11 +20,18 @@ import java.util.Currency;
 @Component
 public class ProductOrderAssembler {
 
+    private final CalculatePurchaseTotalService calculatePurchaseTotalService;
+
+    @Autowired
+    public ProductOrderAssembler(CalculatePurchaseTotalService calculatePurchaseTotalService) {
+        this.calculatePurchaseTotalService = calculatePurchaseTotalService;
+    }
+
     public ProductOrderDto createDto(ProductOrder productOrder) {
         ProductOrderDto productOrderDto = new ProductOrderDto();
 
         productOrderDto.setId(productOrder.getId());
-        productOrderDto.setTotal(productOrder.calcTotal());
+        productOrderDto.setTotal(calculatePurchaseTotalService.execute(productOrder.getPurchase()));
 
         AmountDto amountDto = new AmountDto();
         amountDto.setId(productOrder.getAmount().getId());

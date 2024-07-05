@@ -1,5 +1,6 @@
 package application.controllers;
 
+import application.purchase.CalculatePurchaseTotalService;
 import application.purchase.ProductOrder;
 import application.purchase.ProductOrderDto;
 import application.purchase.Purchase;
@@ -14,43 +15,35 @@ import java.util.List;
 public class PurchaseAssembler {
 
     private final ProductOrderAssembler productOrderAssembler;
+    private final CalculatePurchaseTotalService calculatePurchaseTotalService;
 
     @Autowired
-    public PurchaseAssembler(ProductOrderAssembler productOrderAssembler) {
+    public PurchaseAssembler(ProductOrderAssembler productOrderAssembler,
+                             CalculatePurchaseTotalService calculatePurchaseTotalService) {
         this.productOrderAssembler = productOrderAssembler;
+        this.calculatePurchaseTotalService = calculatePurchaseTotalService;
     }
 
     public PurchaseDto createDto(Purchase purchase) {
         PurchaseDto purchaseDto = new PurchaseDto();
-
         purchaseDto.setId(purchase.getId());
-        purchaseDto.setTotal(purchase.calcTotal());
-
-        List<ProductOrderDto> orders = new ArrayList<>();
+        purchaseDto.setTotal(calculatePurchaseTotalService.execute(purchase));
 
         for (ProductOrder productOrder : purchase.getOrders())
-            orders.add(productOrderAssembler.createDto(productOrder));
-
-        purchaseDto.setOrders(orders);
+            purchaseDto.add(productOrderAssembler.createDto(productOrder));
 
         return purchaseDto;
     }
 
     public Purchase createModel(PurchaseDto purchaseDto) {
         Purchase purchase = new Purchase();
-
-        List<ProductOrder> productOrders = new ArrayList<>();
+        purchase.setId(purchase.getId());
 
         for (ProductOrderDto dtoOrder : purchaseDto.getOrders()) {
             ProductOrder productOrder = productOrderAssembler.createModel(dtoOrder);
-
             productOrder.setPurchase(purchase);
-
-            productOrders.add(productOrder);
+            purchase.add(productOrder);
         }
-
-        purchase.setId(purchase.getId());
-        purchase.setOrders(productOrders);
 
         return purchase;
     }

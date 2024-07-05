@@ -21,7 +21,7 @@ public class PurchaseFactory {
                 .amount(new BigDecimal("1.50"), MeasurementUnitDto.KILOGRAM)
                 .get();
 
-        purchaseDto.addOrders(bananaOrder);
+        purchaseDto.add(bananaOrder);
 
         return purchaseDto;
     }
