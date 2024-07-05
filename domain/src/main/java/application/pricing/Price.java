@@ -15,13 +15,14 @@ public class Price {
     private String id;
 
     private Currency currency;
-    private BigDecimal price;
+
+    private BigDecimal priceValue;
 
     public Price() { }
 
     public Price(Currency currency, BigDecimal price) {
         this.currency = currency;
-        this.price = price;
+        this.priceValue = price;
     }
 
     public String getId() {
@@ -41,10 +42,10 @@ public class Price {
     }
 
     public BigDecimal getPrice() {
-        return price;
+        return priceValue;
     }
 
     public void setPrice(BigDecimal value) {
-        this.price = value;
+        this.priceValue = value;
     }
 }
