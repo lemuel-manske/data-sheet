@@ -15,7 +15,7 @@ public class Amount {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    private BigDecimal amount;
+    private BigDecimal amountValue;
 
     @Enumerated(EnumType.STRING)
     private MeasurementUnit measurementUnit;
@@ -24,7 +24,7 @@ public class Amount {
 
     public Amount(MeasurementUnit measurementUnit, BigDecimal amount) {
         this.measurementUnit = measurementUnit;
-        this.amount = amount;
+        this.amountValue = amount;
     }
 
     public static Amount kilogram(float amount) {
@@ -44,11 +44,11 @@ public class Amount {
     }
 
     public BigDecimal getAmount() {
-        return amount;
+        return amountValue;
     }
 
     public void setAmount(BigDecimal value) {
-        this.amount = value;
+        this.amountValue = value;
     }
 
     public MeasurementUnit getMeasurementUnit() {
