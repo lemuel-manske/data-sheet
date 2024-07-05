@@ -12,8 +12,6 @@ import utils.ProductOrderFactory;
 import utils.PurchaseControllerDouble;
 import utils.PurchaseFactory;
 
-import java.math.BigDecimal;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
