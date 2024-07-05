@@ -1,10 +1,9 @@
 import application.pricing.Bank;
 import application.product.Amount;
 import application.purchase.DefaultScaleStrategy;
-import application.purchase.DifferenceType;
 import application.purchase.ProductOrder;
 import application.purchase.Purchase;
-import application.purchase.PurchaseDifference;
+import application.purchase.Difference;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -35,9 +34,9 @@ class PurchaseTest {
         otherPurchase.add(new ProductOrder(Store.banana(Bank.brl("2.99")), Amount.kilogram(1)));
         otherPurchase.add(new ProductOrder(Store.apple(Bank.brl("5.99")), Amount.kilogram(2)));
 
-        PurchaseDifference diff = new PurchaseDifference();
-        diff.add("Banana", new BigDecimal("-1.00"), DifferenceType.DECREASE);
-        diff.add("Apple", new BigDecimal("2.00"), DifferenceType.INCREASE);
+        Difference diff = new Difference();
+        diff.add("Banana", new BigDecimal("-1.00"), Difference.Type.DECREASE);
+        diff.add("Apple", new BigDecimal("2.00"), Difference.Type.INCREASE);
 
         assertEquals(diff, purchase.differenceFrom(otherPurchase));
     }

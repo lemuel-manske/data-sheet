@@ -5,18 +5,18 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PurchaseDifference {
+public class Difference {
 
     private final List<Variation> listOfVariations = new ArrayList<>();
 
     public void calcDifference(ProductOrder anProductOrder, ProductOrder anotherProductOrder) {
         BigDecimal subtraction = subtractOrders(anProductOrder, anotherProductOrder);
-        DifferenceType type = calcDifferenceType(subtraction);
+        Type type = calcDifferenceType(subtraction);
 
         add(anProductOrder.getProduct().getName(), subtraction, type);
     }
 
-    public void add(String productName, BigDecimal value, DifferenceType type) {
+    public void add(String productName, BigDecimal value, Type type) {
         listOfVariations.add(new Variation(productName, value, type));
     }
 
@@ -27,10 +27,10 @@ public class PurchaseDifference {
         return anOrderPrice.subtract(subtrahendOrderPrice).setScale(2, RoundingMode.HALF_UP);
     }
 
-    private DifferenceType calcDifferenceType(BigDecimal productPriceDifference) {
+    private Type calcDifferenceType(BigDecimal productPriceDifference) {
         return productPriceDifference.floatValue() < 0
-                ? DifferenceType.DECREASE
-                : DifferenceType.INCREASE;
+                ? Type.DECREASE
+                : Type.INCREASE;
     }
 
     public List<Variation> getListOfVariations() {
@@ -39,9 +39,11 @@ public class PurchaseDifference {
 
     @Override
     public boolean equals(Object o) {
-        PurchaseDifference that = (PurchaseDifference) o;
+        Difference that = (Difference) o;
         return listOfVariations.equals(that.listOfVariations);
     }
 
-    public record Variation(String productName, BigDecimal value, DifferenceType type) {}
+    public enum Type { INCREASE, DECREASE }
+
+    public record Variation(String productName, BigDecimal value, Type type) {}
 }

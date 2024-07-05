@@ -1,4 +1,4 @@
-package application.princing;
+package application.pricing;
 
 import java.math.BigDecimal;
 import java.util.Currency;

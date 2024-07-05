@@ -1,6 +1,6 @@
 package application.purchase;
 
-import application.princing.PriceDto;
+import application.pricing.PriceDto;
 import application.product.AmountDto;
 import application.product.MeasurementUnitDto;
 import application.product.ProductDto;

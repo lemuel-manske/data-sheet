@@ -1,7 +1,7 @@
 package application.controllers;
 
 import application.pricing.Price;
-import application.princing.PriceDto;
+import application.pricing.PriceDto;
 import application.product.Amount;
 import application.product.AmountDto;
 import application.product.MeasurementUnit;

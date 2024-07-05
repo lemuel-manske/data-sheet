@@ -40,8 +40,8 @@ public class Purchase {
         return total.setScale(scaleStrategy.getScale(), scaleStrategy.getRoundingMode());
     }
 
-    public PurchaseDifference differenceFrom(Purchase otherPurchase) {
-        PurchaseDifference diff = new PurchaseDifference();
+    public Difference differenceFrom(Purchase otherPurchase) {
+        Difference diff = new Difference();
 
         for (ProductOrder otherProductOrder : otherPurchase.productOrders)
             for (ProductOrder productOrder : productOrders)

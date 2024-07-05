@@ -1,6 +1,6 @@
 package application.product;
 
-import application.princing.PriceDto;
+import application.pricing.PriceDto;
 
 import java.util.Objects;
 
