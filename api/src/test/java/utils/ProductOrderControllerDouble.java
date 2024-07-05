@@ -12,6 +12,7 @@ import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class ProductOrderControllerDouble {
@@ -56,5 +57,20 @@ public class ProductOrderControllerDouble {
         MockHttpServletRequestBuilder deleteRequest = delete("/purchase/product-order/" + productOrderId);
 
         return mockMvc.perform(deleteRequest);
+    }
+
+    public ProductOrderDto updateProductOrder(String productOrderId, ProductOrderDto productOrder) throws Exception {
+        String json = RequestHelper.writeAsString(productOrder);
+
+        MockHttpServletRequestBuilder putRequest = put("/purchase/product-order/" + productOrderId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        MockHttpServletResponse putResponse = mockMvc.perform(putRequest)
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        return RequestHelper.readAs(ProductOrderDto.class, putResponse.getContentAsString());
     }
 }

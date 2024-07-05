@@ -42,7 +42,7 @@ public class PurchaseAssembler {
         List<ProductOrder> productOrders = new ArrayList<>();
 
         for (ProductOrderDto dtoOrder : purchaseDto.getOrders()) {
-            ProductOrder productOrder = productOrderAssembler.createOrder(dtoOrder);
+            ProductOrder productOrder = productOrderAssembler.createModel(dtoOrder);
 
             productOrder.setPurchase(purchase);
 

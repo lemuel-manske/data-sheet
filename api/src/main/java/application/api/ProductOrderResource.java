@@ -31,4 +31,9 @@ public interface ProductOrderResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/purchase/product-order/{productOrderId}")
     void delete(@PathVariable(name = "productOrderId") String productOrderId);
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/purchase/product-order/{productOrderId}")
+    ProductOrderDto update(@PathVariable(name = "productOrderId") String productOrderId,
+                           @RequestBody ProductOrderDto productOrderDto);
 }

@@ -10,6 +10,7 @@ import application.product.Product;
 import application.product.ProductDto;
 import application.purchase.ProductOrder;
 import application.purchase.ProductOrderDto;
+import application.purchase.Purchase;
 import org.springframework.stereotype.Component;
 
 import java.util.Currency;
@@ -43,7 +44,7 @@ public class ProductOrderAssembler {
         return productOrderDto;
     }
 
-    ProductOrder createOrder(ProductOrderDto productOrderDto) {
+    ProductOrder createModel(ProductOrderDto productOrderDto) {
         ProductOrder productOrder = new ProductOrder();
 
         productOrder.setId(productOrderDto.getId());

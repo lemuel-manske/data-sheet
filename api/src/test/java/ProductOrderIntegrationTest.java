@@ -1,4 +1,5 @@
 import application.Application;
+import application.purchase.ProductOrder;
 import application.purchase.ProductOrderDto;
 import application.purchase.PurchaseDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +13,8 @@ import utils.ProductOrderControllerDouble;
 import utils.ProductOrderFactory;
 import utils.PurchaseControllerDouble;
 import utils.PurchaseFactory;
+
+import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -56,5 +59,25 @@ class ProductOrderIntegrationTest {
 
         PurchaseDto purchaseAfterDeletion = purchaseOrderControllerDouble.getPurchaseById(purchase.getId());
         assertThat(purchaseAfterDeletion.getOrders()).isEmpty();
+    }
+
+    @Test
+    void whenProductOrderIsUpdated_ThenMergeIt() throws Exception {
+        PurchaseDto purchase = purchaseOrderControllerDouble.createPurchase(purchaseFactory.bananaPurchase());
+
+        ProductOrderDto bananaOrder = purchase.getOrders().get(0);
+
+        bananaOrder.getProduct().getPrice().setValue(new BigDecimal("1.99"));
+        bananaOrder.getAmount().setValue(new BigDecimal("2.00"));
+
+        productOrderControllerDouble.updateProductOrder(bananaOrder.getId(), bananaOrder);
+
+        ProductOrderDto bananaOrderAfterUpdate = purchaseOrderControllerDouble
+                .getPurchaseById(purchase.getId())
+                .getOrders().get(0);
+
+        bananaOrder.setTotal(new BigDecimal("3.98"));
+
+        assertThat(bananaOrder).isEqualTo(bananaOrderAfterUpdate);
     }
 }

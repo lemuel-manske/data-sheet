@@ -50,7 +50,7 @@ public class ProductOrderController implements ProductOrderResource {
 
     @Override
     public ProductOrderDto add(String purchaseId, ProductOrderDto productOrderDto) {
-        ProductOrder productOrder = productOrderAssembler.createOrder(productOrderDto);
+        ProductOrder productOrder = productOrderAssembler.createModel(productOrderDto);
 
         Purchase purchase = purchaseRepository.findById(purchaseId)
                 .orElseThrow(PurchaseNotFound::new);
@@ -67,6 +67,22 @@ public class ProductOrderController implements ProductOrderResource {
         if (!productOrderRepository.existsById(productOrderId)) throw new ProductOrderNotFound();
 
         productOrderRepository.deleteById(productOrderId);
+    }
+
+    @Override
+    public ProductOrderDto update(String productOrderId, ProductOrderDto productOrderDto) {
+        ProductOrder productOrderToUpdate = productOrderAssembler.createModel(productOrderDto);
+
+        ProductOrder productOrder = productOrderRepository
+                .findById(productOrderId)
+                .orElseThrow(ProductOrderNotFound::new);
+
+        productOrder.setAmount(productOrderToUpdate.getAmount());
+        productOrder.setProduct(productOrderToUpdate.getProduct());
+
+        productOrderRepository.save(productOrder);
+
+        return productOrderAssembler.createDto(productOrder);
     }
 
 }
