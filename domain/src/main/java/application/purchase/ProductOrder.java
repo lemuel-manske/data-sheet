@@ -3,6 +3,7 @@ package application.purchase;
 import application.product.Amount;
 import application.product.Product;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class ProductOrder {
     private String id;
 
     @ManyToOne
+    @Column(nullable = false)
     private Purchase purchase;
 
     @ManyToOne(cascade = CascadeType.ALL)
