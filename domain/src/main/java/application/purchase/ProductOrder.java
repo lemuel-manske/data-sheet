@@ -3,7 +3,6 @@ package application.purchase;
 import application.product.Amount;
 import application.product.Product;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,10 +33,10 @@ public class ProductOrder {
         this.amount = amount;
     }
 
-    public BigDecimal calcTotal(ScaleStrategy scaleStrategy) {
+    public BigDecimal calcTotal(MoneyRoundingPolicy moneyRoundingPolicy) {
         BigDecimal priceTimesAmount = product.getPrice().getPrice().multiply(amount.getAmount());
 
-        return priceTimesAmount.setScale(scaleStrategy.getScale(), scaleStrategy.getRoundingMode());
+        return priceTimesAmount.setScale(moneyRoundingPolicy.getScale(), moneyRoundingPolicy.getRoundingMode());
     }
 
     public String getId() {

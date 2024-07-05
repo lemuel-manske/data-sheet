@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.math.RoundingMode;
 
 @Component
-public class DefaultScaleStrategy implements ScaleStrategy {
+public class DefaultMoneyRoundingPolicy implements MoneyRoundingPolicy {
 
     @Override
     public int getScale() {

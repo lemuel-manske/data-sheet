@@ -2,7 +2,7 @@ package application.purchase;
 
 import java.math.RoundingMode;
 
-public interface ScaleStrategy {
+public interface MoneyRoundingPolicy {
 
     int getScale();
 
